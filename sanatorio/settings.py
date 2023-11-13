@@ -55,7 +55,7 @@ ROOT_URLCONF = 'sanatorio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['gestion_internaciones/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
