@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<title>Pacientes</title>
+<div>
+    <h1>Pacientes</h1>
+</div>
+<div>
+    
+    <ol>
+        {% for i in pacientes %}
+            <li>{{ i.nombre_pac }} | {{ i.apellido_pac }} </li>
+        {% endfor %}
+    </ol>
+    
+</div>
+{% endblock %}

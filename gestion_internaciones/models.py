@@ -7,7 +7,9 @@ class Pacientes(models.Model):
     dni_pac = models.CharField(max_length=10)
     domicilio_pac = models.CharField(max_length=50)
     telefono_pac = models.CharField(max_length=12)
-    estado_pac = ('Internado', 'Alta', 'Fallecido')
+
+    def __str__(self):
+        return self.nombre_pac
 
     
 class Habitaciones(models.Model):
