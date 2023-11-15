@@ -3,5 +3,6 @@ from django.urls import path
 from gestion_internaciones import views
 
 urlpatterns = [
-    path('pacientes/', views.listapacientes, name='listapacientes')
+    path('pacientes/', views.listapacientes, name='listapacientes'),
+    path('agregarpaciente/', views.agregarpaciente, name='agregarpaciente'),
 ]
