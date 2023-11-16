@@ -59,3 +59,15 @@ class FormPaciente(forms.Form):
         choices=Pacientes.estados_choices,
         widget= forms.Select()
     )
+    
+    
+class formdroga(forms.Form):
+        
+        Nombre = forms.CharField(
+            max_length=20, widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Ingrese nombre de la droga'}))
+        
+        Stock = forms.IntegerField(
+            widget=forms.NumberInput(
+                attrs={'class': 'form-control', 'placeholder': 'Ingrese el stock de la droga'})
+        )
