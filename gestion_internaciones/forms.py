@@ -1,6 +1,11 @@
 from django import forms
-
+from gestion_internaciones.models import Pacientes
 class FormPaciente(forms.Form):
+
+    class Meta:
+        model = Pacientes
+        fields = ['estado_pac']
+
     nombre = forms.CharField(
         max_length=30,
         widget=forms.TextInput(
@@ -49,4 +54,8 @@ class FormPaciente(forms.Form):
                 'placeholder': 'Ingrese telefono del paciente'
             }
         )
+    )
+    estado = forms.ChoiceField(
+        choices=Pacientes.estados_choices,
+        widget= forms.Select()
     )

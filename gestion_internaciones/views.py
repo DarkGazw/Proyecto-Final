@@ -25,6 +25,7 @@ def agregarpaciente(request):
                 dni_pac = formulario.cleaned_data['dni'],
                 domicilio_pac = formulario.cleaned_data['domicilio'],
                 telefono_pac = formulario.cleaned_data['telefono'],
+                estado_pac = formulario.cleaned_data['estado'],
 
             )
             paciente.save()
@@ -35,3 +36,4 @@ def agregarpaciente(request):
         'formulario': formulario,
     }   
     return render(request, 'agregarpaciente.html', context)
+

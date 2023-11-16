@@ -1,13 +1,21 @@
 from django.db import models
 
 # Create your models here.
+
+
 class Pacientes(models.Model):
     nombre_pac = models.CharField(max_length=30)
     apellido_pac = models.CharField(max_length=15)
     dni_pac = models.CharField(max_length=10)
     domicilio_pac = models.CharField(max_length=50)
     telefono_pac = models.CharField(max_length=12)
-
+    estados_choices = [('1','Internado'),
+                       ('2', 'Alta'),
+                       ('3', 'Fallecido')]
+    estado_pac = models.CharField(
+        max_length=10,
+        choices=estados_choices, default='Espera'
+    )
     def __str__(self):
         return self.nombre_pac
 
