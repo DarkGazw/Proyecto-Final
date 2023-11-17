@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Lista Personal</h1>
+    {% for i in personal %}
+        <ul>
+            <li>{{ i.nombre_per }} | {{ i.apellido_per }} | {{ i.dni_per }} | {{ i.cargo.nombre_car }}</li>
+        </ul>
+    {% endfor %}
+
+
+{% endblock %}

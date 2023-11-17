@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from gestion_internaciones.models import Pacientes, Drogueria
+from gestion_internaciones.models import Pacientes, Drogueria, Personal
 from gestion_internaciones.forms import FormPaciente, formdroga
 # Create your views here.
 def listapacientes (request):
@@ -65,3 +65,12 @@ def agregardroga(request):
         'formulario': formulario
     }
     return render(request, 'agregardroga.html', context)
+
+def listaPersonal(request):
+    personal = Personal.objects.all()
+
+    context={
+        'personal': personal
+    }
+
+    return render(request, 'listapersonal.html', context)
