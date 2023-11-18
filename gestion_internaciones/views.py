@@ -1,7 +1,11 @@
-from django.shortcuts import render
-from gestion_internaciones.models import Pacientes
-from gestion_internaciones.forms import FormPaciente
-# Create your views here.
+from django.shortcuts import render, redirect
+from gestion_internaciones.models import Pacientes, Personal, Drogueria
+from gestion_internaciones.forms import FormPaciente, formdroga
+from django.contrib.auth import authenticate, login
+from .forms import CustomUserCreationForm
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def listapacientes (request):
     pacientes = Pacientes.objects.all()
     
@@ -37,3 +41,55 @@ def agregarpaciente(request):
     }   
     return render(request, 'agregarpaciente.html', context)
 
+def register(request):
+    if request.method== 'GET':
+        return render(request, 'registration/register.html', {'form': CustomUserCreationForm})
+    
+    if request.method== 'POST':
+        form = CustomUserCreationForm(request.POST)
+
+        if form.is_valid():
+            user= form.save(commit=False)
+            user.save()
+
+            user=authenticate(
+                username= form.cleaned_data['username'],
+                password= form.cleaned_data['password1']
+            )
+
+            login(request, user)
+
+            return redirect('home')
+        
+        else:
+            return render(request, 'registration/register.html', {'form': form})
+        
+def listaPersonal(request):
+    personal = Personal.objects.all()
+
+    context={
+        'personal': personal
+    }
+
+    return render(request, 'listapersonal.html', context)
+
+
+
+
+def home(request):
+    context = {}
+
+    return render(request, 'home/home.html', context)
+
+def agregardroga(request):
+    formulario = formdroga()
+    if request.method== 'POST':
+        formulario = formdroga(request.POST)
+        if formulario.is_valid(): 
+            formulario.save()
+            formulario = formdroga()
+                
+    context={
+        'formulario': formulario
+    }
+    return render(request, 'agregardroga.html', context)

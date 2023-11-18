@@ -2,12 +2,12 @@
 
 {% block content %}
 <title>Pacientes</title>
-<div>
-    <h1>Pacientes</h1>
+<div class="mt-3">
+    <h1 class="row justify-content-left">Pacientes</h1>
 </div>
-<div class="row justify-content-center mt-5">
+<div class="row justify-content-center mt-3">
     <table class="table">
-            <tr class="table-dark">
+            <tr class="table-info">
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>DNI</th>
@@ -22,7 +22,7 @@
                 <td>{{ i.dni_pac }}</td>
                 <td>{{ i.domicilio_pac }}</td>
                 <td>{{ i.telefono_pac }}</td>
-                <td>{{ i.estado_pac }}</td>
+                <td>{{ i.get_estado_pac_display }}</td>
             </tr>
             {% endfor %}
     </table>   

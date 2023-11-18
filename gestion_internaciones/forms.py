@@ -1,5 +1,9 @@
 from django import forms
-from gestion_internaciones.models import Pacientes
+from gestion_internaciones.models import Pacientes, Drogueria
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit
 class FormPaciente(forms.Form):
 
     class Meta:
@@ -59,3 +63,28 @@ class FormPaciente(forms.Form):
         choices=Pacientes.estados_choices,
         widget= forms.Select()
     )
+
+class CustomUserCreationForm(UserCreationForm):
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+
+        fields=['username', 'first_name', 'last_name', 'email', 'password1', 'password2' ]
+
+class formdroga(forms.ModelForm):
+    class Meta:
+        model = Drogueria
+
+        fields= '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            'nombre_drog',
+            'stock_drog',
+            Submit('submit', 'Guardar')
+        )

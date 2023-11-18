@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <title>Inicio</title>
+
+    <h1>Inicio de prueba</h1>
+    <hr>
+
+    {% if request.user.is_authenticated %}
+        <h4>Exito</h4>
+    {% endif %}
+
+
+
+{% endblock%}
