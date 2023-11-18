@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Lista de la Drogueria</h1>
+    {% for i in drogueria %}
+    <ol>
+        <li>{{  i.nombre_drog}} | {{ i.stock_drog}}</li>
+
+    </ol>
+    {% endfor %}
+
+
+
+
+
+{% endblock %}
