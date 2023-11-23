@@ -1,15 +1,47 @@
 {% extends "base.html" %}
 
-{% block content %}
-    <title>Inicio</title>
+{% block title %}
+    Inicio
+{% endblock %}
 
+{% block content %}
     <h1>Inicio de prueba</h1>
     <hr>
 
     {% if request.user.is_authenticated %}
-        <h4>Exito</h4>
+        <h4>Bienvenido, {{ request.user.username }}!</h4>
+    {% else %}
+        <button onclick="location.href='/login/'">Iniciar sesión</button>
+        <!-- Agrega un formulario de inicio de sesión o enlace a la página de inicio de sesión según sea necesario -->
     {% endif %}
 
+    <hr>
+
+    <h2>Secciones:</h2>
+
+    <div>
+        <a href="{% url 'listadrogueria' %}">
+            <button onclick="location.href='/drogueria/'">Droguería</button>
+        </a>
+        
+        <p>Explora nuestra amplia selección de medicamentos y productos farmacéuticos.</p>
+    </div>
+
+    <div>
+        <button onclick="location.href='/pacientes/'">Pacientes</button>
+        <p>Gestiona la información de los pacientes y accede a sus historias clínicas.</p>
+    </div>
+
+    <div>
+        <button onclick="location.href='/internaciones/'">Internaciones</button>
+        <p>Información sobre las internaciones y camas disponibles en nuestro sanatorio.</p>
+    </div>
+
+    <div>
+        <button onclick="location.href='/personal/'">Personal</button>
+        <p>Conoce a nuestro dedicado personal médico y administrativo.</p>
+    </div>
+
+{% endblock %}
 
 
-{% endblock%}
