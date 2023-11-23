@@ -4,12 +4,15 @@
     <h1>Lista de la Drogueria</h1>
     {% for i in drogueria %}
     <ol>
-        <li>{{  i.nombre_drog}} | {{ i.stock_drog}}</li>
+        <li>{{  i.nombre_drog }} | {{ i.stock_drog }}</li>
 
     </ol>
     {% endfor %}
-
-
+    <div>
+        <a href="{% url 'agregardroga' %}">
+            <button class="btn btn-success">Agregar Droga</button>
+        </a>
+    </div>
 
 
 

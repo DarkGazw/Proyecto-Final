@@ -21,14 +21,15 @@
 
     <div>
         <a href="{% url 'listadrogueria' %}">
-            <button onclick="location.href='/drogueria/'">Droguería</button>
+            <button>Droguería</button>
         </a>
-        
         <p>Explora nuestra amplia selección de medicamentos y productos farmacéuticos.</p>
     </div>
 
     <div>
-        <button onclick="location.href='/pacientes/'">Pacientes</button>
+        <a href="{% url 'listapacientes' %}">
+            <button>Pacientes</button>
+        </a>
         <p>Gestiona la información de los pacientes y accede a sus historias clínicas.</p>
     </div>
 
@@ -38,7 +39,9 @@
     </div>
 
     <div>
-        <button onclick="location.href='/personal/'">Personal</button>
+        <a href="{% url 'listapersonal' %}">
+            <button>Personal</button>
+        </a>
         <p>Conoce a nuestro dedicado personal médico y administrativo.</p>
     </div>
 
