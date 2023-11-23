@@ -64,6 +64,7 @@ def register(request):
         else:
             return render(request, 'registration/register.html', {'form': form})
         
+
 def listaPersonal(request):
     personal = Personal.objects.all()
 
@@ -72,8 +73,6 @@ def listaPersonal(request):
     }
 
     return render(request, 'listapersonal.html', context)
-
-
 
 
 def home(request):
@@ -93,3 +92,12 @@ def agregardroga(request):
         'formulario': formulario
     }
     return render(request, 'agregardroga.html', context)
+
+def listadroga(request):
+    drogueria = Drogueria.objects.all()
+
+    context={
+        'drogueria': drogueria
+    }
+
+    return render(request, 'listadrogueria.html', context)

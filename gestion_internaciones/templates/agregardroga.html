@@ -10,8 +10,15 @@
         <div>
             {{ formulario | crispy }}
         </div>
-        <button type="submit" class="btn btn-success">Agregar</button>
+        <div class="col-2">
+            <button type="submit" class="btn btn-success">Agregar </button>
+        </div>
     </form>
+</div>
+<div class="col-2 mt-2">
+    <a href="{% url 'listadrogueria' %}">
+        <button class="btn btn-danger">Cancelar</button>
+    </a>
 </div>
 {% endif %}
 {% endblock %}
