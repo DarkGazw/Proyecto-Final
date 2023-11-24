@@ -9,4 +9,6 @@ urlpatterns = [
     path('personal/', views.listaPersonal, name='listapersonal'),
     path('agregardroga/', views.agregardroga, name= 'agregardroga'),
     path('listadrogueria/', views.listadroga, name='listadrogueria'),
+    path('internaciones/', views.listainternaciones, name='internaciones'),
+    path('agregarinternacion/', views.agregarinternacion, name='agregarinternacion'),
 ]

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from gestion_internaciones.models import Pacientes, Personal, Drogueria
-from gestion_internaciones.forms import FormPaciente, formdroga
+from gestion_internaciones.models import Pacientes, Personal, Drogueria, Internaciones
+from gestion_internaciones.forms import FormPaciente, formdroga, forminternacion
 from django.contrib.auth import authenticate, login
 from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -103,4 +103,24 @@ def listadroga(request):
     return render(request, 'listadrogueria.html', context)
 
 
-    
+def listainternaciones(request):
+    internaciones = Internaciones.objects.all()
+
+    context={
+        'internaciones' : internaciones
+
+    }
+    return render(request, 'internaciones.html', context)
+
+def agregarinternacion(request):
+    formulario = forminternacion()
+    if request.method == 'POST':
+        formulario = forminternacion(request.POST)
+        if formulario.is_valid(): 
+            formulario.save()
+            formulario = forminternacion()
+                
+    context={
+        'formulario': formulario
+    }
+    return render(request, 'agregarinternacion.html', context)
