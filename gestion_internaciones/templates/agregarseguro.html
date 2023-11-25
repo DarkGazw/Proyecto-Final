@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Agregar Obra</h1>
+    {% load crispy_forms_tags %}
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+            {{ formulario | crispy }}
+        </div>
+        <div class="col-2">
+            <button type="submit" class="btn btn-success">Agregar </button>
+        </div>
+    </form>
+    </form>
+
+
+{% endblock content %}

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from gestion_internaciones.models import Pacientes, Personal, Drogueria
-from gestion_internaciones.forms import FormPaciente, formdroga
+from gestion_internaciones.models import Pacientes, Personal, Drogueria, Obras_Sociales, Coseguros, Obras_Pacientes
+from gestion_internaciones.forms import FormPaciente, formdroga, asignarObra
 from django.contrib.auth import authenticate, login
 from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -101,3 +101,19 @@ def listadroga(request):
     }
 
     return render(request, 'listadrogueria.html', context)
+
+def agregarseguro(request, pk):
+    pacientes = Pacientes.objects.get(pk)
+    form = asignarObra()
+    if request.method=='POST':
+        form = asignarObra(request.POST)
+        if form.is_valid():
+            form.save()
+            form=asignarObra()
+    context={
+        'formulario': form,
+        'pacientes': pacientes
+    }
+
+    return render(request, 'agregarseguro.html', context)
+

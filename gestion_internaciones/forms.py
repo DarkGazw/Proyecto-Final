@@ -1,5 +1,5 @@
 from django import forms
-from gestion_internaciones.models import Pacientes, Drogueria
+from gestion_internaciones.models import Pacientes, Drogueria, Obras_Pacientes, Internaciones
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from crispy_forms.helper import FormHelper
@@ -86,5 +86,44 @@ class formdroga(forms.ModelForm):
         self.helper.layout = Layout(
             'nombre_drog',
             'stock_drog',
+            Submit('submit', 'Guardar')
+        )
+
+class asignarhab(forms.ModelForm):
+
+    class Meta:
+        model = Internaciones
+
+        fields='__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            'paciente_inter',
+            'habitacion_inter',
+            'fecha_ingreso',
+            'hora_ingreso',
+            'fecha_egreso',
+            'hora_egreso',
+            
+            Submit('submit', 'Guardar')
+        )
+
+class asignarObra(forms.ModelForm):
+
+    class Meta:
+        model = Obras_Pacientes
+
+        fields='__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            'paciente',
+            'obra_social',
+            'coseguro',
+            
             Submit('submit', 'Guardar')
         )

@@ -14,6 +14,7 @@
                 <th>Domicilio</th>
                 <th>Telefóno</th>
                 <th>Estado actual</th>
+                <th>Agregar</th>
             </tr>
             {% for i in pacientes %}
             <tr>
@@ -23,6 +24,7 @@
                 <td>{{ i.domicilio_pac }}</td>
                 <td>{{ i.telefono_pac }}</td>
                 <td>{{ i.get_estado_pac_display }}</td>
+                <td><a href="{%url 'asignarObra' i.pk %}">Agregar</a></td>
             </tr>
             {% endfor %}
     </table>   
