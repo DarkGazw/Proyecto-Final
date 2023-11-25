@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <title>Asignar Obra y Coseguro</title>
+    <h1>Asignar Obra y Coseguro a {{ paciente.nombre_pac }} {{ paciente.apellido_pac }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+{% endblock %}

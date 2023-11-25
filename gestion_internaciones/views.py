@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from gestion_internaciones.models import Pacientes, Personal, Drogueria, Obras_Sociales, Coseguros, Obras_Pacientes
-from gestion_internaciones.forms import FormPaciente, formdroga, asignarObra
+from gestion_internaciones.models import Pacientes, Personal, Drogueria, Internaciones, Obras_Sociales, Coseguros, Obras_Pacientes
+from gestion_internaciones.forms import FormPaciente, formdroga, forminternacion, AsignarObraCoseguroForm
 from django.contrib.auth import authenticate, login
 from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -102,18 +102,67 @@ def listadroga(request):
 
     return render(request, 'listadrogueria.html', context)
 
-def agregarseguro(request, pk):
-    pacientes = Pacientes.objects.get(pk)
-    form = asignarObra()
-    if request.method=='POST':
-        form = asignarObra(request.POST)
-        if form.is_valid():
-            form.save()
-            form=asignarObra()
+def listainternaciones(request):
+    internaciones = Internaciones.objects.all()
+
     context={
-        'formulario': form,
-        'pacientes': pacientes
+        'internaciones' : internaciones
+
+    }
+    return render(request, 'internaciones.html', context)
+
+def agregarinternacion(request):
+    formulario = forminternacion()
+    if request.method == 'POST':
+        formulario = forminternacion(request.POST)
+        if formulario.is_valid(): 
+
+            internacion = formulario.save(commit=False)
+            paciente = internacion.paciente_inter   
+            paciente.estado_pac = '1'
+            paciente.save()
+            internacion.save()
+                
+    context={
+        'formulario': formulario
+    }
+    return render(request, 'agregarinternacion.html', context)
+
+def cambiarestado(request, paciente_id):
+    paciente = Pacientes.objects.get(id=paciente_id)
+
+    # Lógica para alternar el estado
+    if paciente.estado_pac == '1':
+        paciente.estado_pac = '2'  # Cambiar de 'Internado' a 'Alta'
+    elif paciente.estado_pac == '2':
+        paciente.estado_pac = '3'  # Cambiar de 'Alta' a 'Fallecido'
+    else:
+        paciente.estado_pac = '1'  # Volver a 'Internado' si es 'Fallecido'
+
+    paciente.save()
+
+    return redirect('listapacientes')
+
+def asignar_obra_coseguro(request, paciente_id):
+    paciente = Pacientes.objects.get(id=paciente_id)
+
+    if request.method == 'POST':
+        form = AsignarObraCoseguroForm(request.POST)
+        if form.is_valid():
+            obra_coseguro = form.save(commit=False)
+            obra_coseguro.paciente = paciente
+            obra_coseguro.save()
+            return redirect('listapacientes')
+    else:
+        form = AsignarObraCoseguroForm()
+
+    return render(request, 'obra.html', {'form': form, 'paciente': paciente})
+
+def mostrarObras(request):
+    obras = Obras_Pacientes.objects.all()
+
+    context={
+        'obras': obras
     }
 
-    return render(request, 'agregarseguro.html', context)
-
+    return render(request, 'mostrarobra.html', context)

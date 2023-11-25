@@ -14,7 +14,7 @@
                 <th>Domicilio</th>
                 <th>Telefóno</th>
                 <th>Estado actual</th>
-                <th>Agregar</th>
+                <th>Asignar seguro</th>
             </tr>
             {% for i in pacientes %}
             <tr>
@@ -24,14 +24,21 @@
                 <td>{{ i.domicilio_pac }}</td>
                 <td>{{ i.telefono_pac }}</td>
                 <td>{{ i.get_estado_pac_display }}</td>
-                <td><a href="{%url 'asignarObra' i.pk %}">Agregar</a></td>
+                <td>
+                    <a href="{% url 'asignarObra' i.id %}">
+                    <button class="btn btn-info">Asignar Obra y Coseguro</button>
+                </a>
+            </td>
             </tr>
             {% endfor %}
     </table>   
 </div>
-<div class="mt-5">
-    <a href="{% url 'agregarpaciente' %}">
+<div class="mt-5 row">
+    <a href="{% url 'agregarpaciente' %}" class="col">
         <button class="btn btn-success">Agregar Paciente</button>
+    </a>
+    <a href="{% url 'obras' %}" class="col">
+        <button class="btn btn-success">Mostrar obras</button>
     </a>
 </div>
 {% endblock %}

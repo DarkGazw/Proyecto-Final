@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content%}  
+    <h1>Pacientes + Obras sociales</h1>
+    <table class="table">
+        <tr>
+            <th>Paciente</th>
+            <th>Obra Social</th>
+            <th>Coseguro</th>
+        </tr>
+        {% for i in obras %}
+        <tr>
+            <td>{{ i.paciente.nombre_pac }}</td>
+            <td>{{ i.obra_social.nombre_obra }}</td>
+            <td>{{ i.coseguro.nombre_cos }}</td>
+        </tr>
+        {% endfor %} 
+
+    </table>
+
+
+
+{%endblock%}

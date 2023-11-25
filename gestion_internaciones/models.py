@@ -10,8 +10,8 @@ class Pacientes(models.Model):
     domicilio_pac = models.CharField(max_length=50)
     telefono_pac = models.CharField(max_length=12)
     estados_choices = [('1','Internado'),
-                       ('2', 'Alta'),
-                       ('3', 'Fallecido')]
+    ('2', 'Alta'),
+    ('3', 'Fallecido')]
     estado_pac = models.CharField(
         max_length=10,
         choices=estados_choices, default='Espera'
