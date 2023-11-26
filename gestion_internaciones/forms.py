@@ -61,7 +61,9 @@ class FormPaciente(forms.Form):
     )
     estado = forms.ChoiceField(
         choices=Pacientes.estados_choices,
-        widget= forms.Select()
+        widget= forms.Select(),
+        initial='4',
+        disabled=True
     )
 
 class CustomUserCreationForm(UserCreationForm):
@@ -92,21 +94,15 @@ class formdroga(forms.ModelForm):
 class forminternacion(forms.ModelForm):
     class Meta:
         model = Internaciones
-
-        fields= '__all__'
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.layout = Layout(
-            'pacientes_inter',
-            'habitacion_inter',
-            'fecha_ingreso',
-            'hora_ingreso',
-            'fecha_egreso',
-            'hora_egreso',
-            Submit('submit', 'Guardar')
-        )
+        pacientes_disponibles = kwargs.pop('pacientes_disponibles', None)
+        super(forminternacion, self).__init__(*args, **kwargs)
+
+        if pacientes_disponibles:
+            self.fields['paciente_inter'].queryset = pacientes_disponibles
+
 
 
 class asignarObra(forms.ModelForm):

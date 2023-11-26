@@ -11,10 +11,11 @@ class Pacientes(models.Model):
     telefono_pac = models.CharField(max_length=12)
     estados_choices = [('1','Internado'),
     ('2', 'Alta'),
-    ('3', 'Fallecido')]
+    ('3', 'Fallecido'),
+    ('4', 'Espera')]
     estado_pac = models.CharField(
         max_length=10,
-        choices=estados_choices, default='Espera'
+        choices=estados_choices, default='4'
     )
     def __str__(self):
         return self.nombre_pac
@@ -30,8 +31,8 @@ class Internaciones(models.Model):
     habitacion_inter = models.ForeignKey("Habitaciones", on_delete=models.CASCADE)
     fecha_ingreso = models.DateField(auto_now_add=True)
     hora_ingreso = models.TimeField(auto_now_add=True)
-    fecha_egreso = models.DateField(auto_now=True)
-    hora_egreso = models.TimeField(auto_now=True)
+    fecha_egreso = models.DateField(null=True, blank=True)
+    hora_egreso = models.TimeField(null=True, blank=True)
 
 class Cargos(models.Model):
     nombre_car = models.CharField(max_length=50)

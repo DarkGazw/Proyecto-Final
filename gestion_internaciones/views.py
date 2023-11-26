@@ -3,6 +3,7 @@ from gestion_internaciones.models import Pacientes, Personal, Drogueria, Interna
 from gestion_internaciones.forms import FormPaciente, formdroga, forminternacion, AsignarObraCoseguroForm
 from django.contrib.auth import authenticate, login
 from .forms import CustomUserCreationForm
+import datetime
 from django.contrib.auth.decorators import login_required
 
 @login_required
@@ -64,7 +65,7 @@ def register(request):
         else:
             return render(request, 'registration/register.html', {'form': form})
         
-
+@login_required
 def listaPersonal(request):
     personal = Personal.objects.all()
 
@@ -111,37 +112,30 @@ def listainternaciones(request):
     }
     return render(request, 'internaciones.html', context)
 
-def agregarinternacion(request):
-    formulario = forminternacion()
+def agregar_internacion(request):
+    # Filtrar los pacientes que no están internados
+    pacientes_disponibles = Pacientes.objects.exclude(estado_pac='1')  # Excluir a los pacientes internados
+
     if request.method == 'POST':
-        formulario = forminternacion(request.POST)
-        if formulario.is_valid(): 
-
+        formulario = forminternacion(request.POST, pacientes_disponibles=pacientes_disponibles)
+        if formulario.is_valid():
             internacion = formulario.save(commit=False)
-            paciente = internacion.paciente_inter   
-            paciente.estado_pac = '1'
+
+            # Obtén el paciente asociado a la internación
+            paciente = internacion.paciente_inter
+
+            # Actualiza el estado del paciente a "Internado"
+            paciente.estado_pac = '1'  # Suponiendo que '1' es el código para "Internado"
             paciente.save()
+
             internacion.save()
-                
-    context={
-        'formulario': formulario
-    }
-    return render(request, 'agregarinternacion.html', context)
 
-def cambiarestado(request, paciente_id):
-    paciente = Pacientes.objects.get(id=paciente_id)
+            return redirect('internaciones')
 
-    # Lógica para alternar el estado
-    if paciente.estado_pac == '1':
-        paciente.estado_pac = '2'  # Cambiar de 'Internado' a 'Alta'
-    elif paciente.estado_pac == '2':
-        paciente.estado_pac = '3'  # Cambiar de 'Alta' a 'Fallecido'
     else:
-        paciente.estado_pac = '1'  # Volver a 'Internado' si es 'Fallecido'
+        formulario = forminternacion(pacientes_disponibles=pacientes_disponibles)
 
-    paciente.save()
-
-    return redirect('listapacientes')
+    return render(request, 'agregarinternacion.html', {'formulario': formulario})
 
 def asignar_obra_coseguro(request, paciente_id):
     paciente = Pacientes.objects.get(id=paciente_id)
@@ -166,3 +160,34 @@ def mostrarObras(request):
     }
 
     return render(request, 'mostrarobra.html', context)
+
+def altaPaciente(request, internaciones_id):
+    internacion = Internaciones.objects.get(id=internaciones_id)
+
+    if request.method=='POST':
+        form = forminternacion(request.POST, instance = internacion)
+        internacion = form.save(commit=False)
+            # Establecer la fecha y hora de egreso al momento del formulario
+        internacion.fecha_egreso = form.cleaned_data['fecha_egreso']
+        internacion.hora_egreso = form.cleaned_data['hora_egreso']
+
+        paciente = internacion.paciente_inter
+        paciente.estado_pac = '2'
+        if not internacion.fecha_egreso:
+            internacion.fecha_egreso = datetime.date.today()
+        if not internacion.hora_egreso:
+            internacion.hora_egreso = datetime.datetime.now().time()
+        paciente.save()
+
+        internacion.save()
+
+        return redirect('internaciones')
+    else:
+        form = forminternacion(instance=internacion)
+
+    context={
+        'form': form,
+        'internacion': internacion
+    }
+
+    return render(request, 'alta.html',context)

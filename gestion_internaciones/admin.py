@@ -1,5 +1,5 @@
 from django.contrib import admin
-from gestion_internaciones.models import Pacientes, Drogueria, Personal, Cargos, Obras_Sociales, Coseguros, Habitaciones, Internaciones
+from gestion_internaciones.models import Pacientes, Drogueria, Personal, Cargos, Obras_Sociales, Coseguros, Habitaciones, Internaciones, Obras_Pacientes
 
 class agregarpacientes(admin.ModelAdmin):
     pass 
@@ -36,6 +36,9 @@ class agragarhabitacion(admin.ModelAdmin):
 class agregarinternacion(admin.ModelAdmin):
     pass
 
+class obras(admin.ModelAdmin):
+    pass
+
 admin.site.register(Pacientes)
 admin.site.register(Drogueria)
 admin.site.register(Cargos)
@@ -44,3 +47,4 @@ admin.site.register(Obras_Sociales)
 admin.site.register(Coseguros)
 admin.site.register(Habitaciones)
 admin.site.register(Internaciones)
+admin.site.register(Obras_Pacientes)

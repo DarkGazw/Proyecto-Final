@@ -8,4 +8,9 @@
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
+    <div class="mt-2">
+        <a href="{% url 'listapacientes' %}">
+            <button class="btn btn-danger">Cancelar</button>
+        </a>
+    </div>  
 {% endblock %}
