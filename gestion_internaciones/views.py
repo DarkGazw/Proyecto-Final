@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from gestion_internaciones.models import Pacientes, Personal, Drogueria, Internaciones, Obras_Pacientes, Personal_Paciente
-from gestion_internaciones.forms import FormPaciente, formdroga, forminternacion, AsignarObraCoseguroForm
+from gestion_internaciones.models import Pacientes, Personal, Drogueria, Internaciones, Obras_Sociales, Coseguros, Obras_Pacientes, Prescripciones, Personal_Paciente
+from gestion_internaciones.forms import FormPaciente, formdroga, forminternacion, AsignarObraCoseguroForm,formprescripcion
 from django.contrib.auth import authenticate, login
 from .forms import CustomUserCreationForm
 import datetime
@@ -200,3 +200,25 @@ def verpac_per(request):
     }
 
     return render(request, 'personal_paciente.html', context)
+def prescripcion(request, paciente_id):
+    paciente = Pacientes.objects.get(id=paciente_id)
+
+    if request.method == 'POST':
+        form = formprescripcion(request.POST)
+
+        if form.is_valid():
+            prescripcion = Prescripciones()
+
+            prescripcion.save()
+
+            form = formprescripcion()
+    
+    prescripcion = Prescripciones.objects.filter(paciente=paciente)
+
+    context={
+        'paciente':paciente,
+        'form': form,
+        'prescripcion': prescripcion
+    }
+
+    return render(request,'prescripcion.html',context)

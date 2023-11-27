@@ -1,5 +1,5 @@
 from django import forms
-from gestion_internaciones.models import Pacientes, Drogueria, Internaciones, Obras_Pacientes, Internaciones, Obras_Sociales, Coseguros
+from gestion_internaciones.models import Pacientes, Drogueria, Internaciones, Obras_Pacientes, Internaciones, Prescripciones, Obras_Sociales, Coseguros
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from crispy_forms.helper import FormHelper
@@ -138,3 +138,19 @@ class AsignarObraCoseguroForm(forms.ModelForm):
         # Personaliza las opciones para el campo de coseguro
         coseguros = Coseguros.objects.all()
         self.fields['coseguro'].queryset = coseguros
+class formprescripcion(forms.ModelForm):
+    class Meta:
+        model = Prescripciones
+
+        fields='__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            'personal_paciente',
+            'medicamentos',
+            'detalles_de_control',
+            
+            Submit('submit', 'Guardar')
+        )
