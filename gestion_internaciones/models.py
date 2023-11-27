@@ -50,11 +50,16 @@ class Obras_Sociales(models.Model):
     tipo = models.CharField(max_length=10)
     prestaciones = models.TextField()
 
+    def __str__(self):
+        return self.nombre_obra
+
 class Coseguros(models.Model):
     nombre_cos = models.CharField(max_length=10)
     tipo = models.CharField(max_length=10)
     prestaciones = models.TextField()
 
+    def __str__(self):
+        return self.nombre_cos
 class Obras_Pacientes(models.Model):
     paciente = models.ForeignKey("Pacientes",on_delete=models.CASCADE)
     obra_social = models.ForeignKey("Obras_Sociales",on_delete=models.CASCADE)

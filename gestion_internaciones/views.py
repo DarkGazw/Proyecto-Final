@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from gestion_internaciones.models import Pacientes, Personal, Drogueria, Internaciones, Obras_Sociales, Coseguros, Obras_Pacientes
+from gestion_internaciones.models import Pacientes, Personal, Drogueria, Internaciones, Obras_Pacientes, Personal_Paciente
 from gestion_internaciones.forms import FormPaciente, formdroga, forminternacion, AsignarObraCoseguroForm
 from django.contrib.auth import authenticate, login
 from .forms import CustomUserCreationForm
@@ -191,3 +191,12 @@ def altaPaciente(request, internaciones_id):
     }
 
     return render(request, 'alta.html',context)
+
+def verpac_per(request):
+    lista = Personal_Paciente.objects.all()
+
+    context = {
+        'lista': lista
+    }
+
+    return render(request, 'personal_paciente.html', context)

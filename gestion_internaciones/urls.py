@@ -13,5 +13,6 @@ urlpatterns = [
     path('agregarinternacion/', views.agregar_internacion, name='agregarinternacion'),
     path('obra/<int:paciente_id>/', views.asignar_obra_coseguro, name='asignarObra'),
     path('obras/', views.mostrarObras, name='obras'),
-    path('alta/<int:internaciones_id>', views.altaPaciente, name='alta')
+    path('alta/<int:internaciones_id>', views.altaPaciente, name='alta'),
+    path('per_pac/',views.verpac_per, name='per_pac')
 ]
