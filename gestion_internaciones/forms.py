@@ -1,5 +1,5 @@
 from django import forms
-from gestion_internaciones.models import Pacientes, Drogueria, Internaciones, Obras_Pacientes, Internaciones
+from gestion_internaciones.models import Pacientes, Drogueria, Internaciones, Obras_Pacientes, Internaciones, Prescripciones
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from crispy_forms.helper import FormHelper
@@ -127,3 +127,20 @@ class AsignarObraCoseguroForm(forms.ModelForm):
     class Meta:
         model = Obras_Pacientes
         fields = ['obra_social', 'coseguro']
+
+class formprescripcion(forms.ModelForm):
+    class Meta:
+        model = Prescripciones
+
+        fields='__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            'personal_paciente',
+            'medicamentos',
+            'detalles_de_control',
+            
+            Submit('submit', 'Guardar')
+        )
