@@ -3,10 +3,20 @@
 {% block content %}
     <h1>Lista de la Drogueria</h1>
     <table class="table">
-        <th>Nombre medicamento</th>
-        <th>Descripcion</th>
-        <th></th>
-        <th>Stock</th>
+        <tr>
+            <th>Nombre medicamento</th>
+            <th>Descripcion</th>
+            <th>Tipo</th>
+            <th>Stock</th>
+        </tr>
+     {% for i in drogueria %}
+        <tr>
+            <td>{{ i.nombre_drog }}</td>
+            <td>{{ i.descripcion_drog }}</td>
+            <td>{{ i.tipo_drog }}</td>
+            <td>{{ i.stock_drog }}</td>
+        </tr>
+        {% endfor %}
     </table>
     <div>
         <a href="{% url 'agregardroga' %}">

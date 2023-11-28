@@ -71,10 +71,16 @@ class Personal_Paciente(models.Model):
 
 class Drogueria(models.Model):
     nombre_drog = models.CharField(max_length=20)
+    tipo_drog = models.CharField(max_length=255, null=True, blank=True)
     stock_drog = models.IntegerField()
+<<<<<<< HEAD
     
     def __str__(self):
         return self.nombre_drog
+=======
+    descripcion_drog = models.CharField(max_length=255, null=True, blank=True)
+
+>>>>>>> 8e6ae313226af951458abaf3038aa770b5a67820
 
 class Prescripciones(models.Model):
     personal_paciente = models.ForeignKey("Personal_Paciente", on_delete=models.CASCADE)
