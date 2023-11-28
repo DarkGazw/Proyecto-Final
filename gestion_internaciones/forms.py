@@ -87,6 +87,8 @@ class formdroga(forms.ModelForm):
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
             'nombre_drog',
+            'descripcion_drog',
+            'tipo_drog',
             'stock_drog',
             Submit('submit', 'Guardar')
         )

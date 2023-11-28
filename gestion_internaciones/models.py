@@ -71,7 +71,10 @@ class Personal_Paciente(models.Model):
 
 class Drogueria(models.Model):
     nombre_drog = models.CharField(max_length=20)
+    tipo_drog = models.CharField(max_length=255, null=True, blank=True)
     stock_drog = models.IntegerField()
+    descripcion_drog = models.CharField(max_length=255, null=True, blank=True)
+
 
 class Prescripciones(models.Model):
     personal_paciente = models.ForeignKey("Personal_Paciente", on_delete=models.CASCADE)
