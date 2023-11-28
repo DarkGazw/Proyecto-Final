@@ -1,0 +1,12 @@
+<!-- templates/tuapp/cargar_prescripcion.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Cargar Prescripción</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Cargar Prescripción</button>
+    </form>
+{% endblock %}

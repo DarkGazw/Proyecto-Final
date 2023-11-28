@@ -142,15 +142,5 @@ class formprescripcion(forms.ModelForm):
     class Meta:
         model = Prescripciones
 
-        fields='__all__'
+        fields=['medicamentos','detalles_de_control']
     
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.layout = Layout(
-            'personal_paciente',
-            'medicamentos',
-            'detalles_de_control',
-            
-            Submit('submit', 'Guardar')
-        )

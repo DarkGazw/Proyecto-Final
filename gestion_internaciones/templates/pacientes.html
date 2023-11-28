@@ -15,7 +15,6 @@
                 <th>Telefóno</th>
                 <th>Estado actual</th>
                 <th>Asignar seguro</th>
-                <th>Prescripcion</th>
             </tr>
             {% for i in pacientes %}
             <tr>
@@ -29,12 +28,7 @@
                     <a href="{% url 'asignarObra' i.id %}">
                     <i class="bi bi-plus-circle"></i>
                 </a>
-            </td>
-            <td>
-                <a href="{% url 'prescripcion' i.id %}">
-                    <button class="btn btn-info">Ver Prescripciones</button>
-                </a>
-            </td>
+                </td>
             </tr>
             {% endfor %}
     </table>   

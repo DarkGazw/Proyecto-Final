@@ -72,8 +72,14 @@ class Personal_Paciente(models.Model):
 class Drogueria(models.Model):
     nombre_drog = models.CharField(max_length=20)
     stock_drog = models.IntegerField()
+    
+    def __str__(self):
+        return self.nombre_drog
 
 class Prescripciones(models.Model):
     personal_paciente = models.ForeignKey("Personal_Paciente", on_delete=models.CASCADE)
     medicamentos = models.ForeignKey("Drogueria", on_delete=models.CASCADE)
     detalles_de_control = models.TextField()
+    
+    def __str__(self):
+        return f"{self.medicamentos} - {self.personal_paciente}"

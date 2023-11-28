@@ -200,25 +200,22 @@ def verpac_per(request):
     }
 
     return render(request, 'personal_paciente.html', context)
-def prescripcion(request, paciente_id):
-    paciente = Pacientes.objects.get(id=paciente_id)
 
+@login_required
+def cargar_prescripcion(request, personal_paciente_id):
     if request.method == 'POST':
         form = formprescripcion(request.POST)
-
         if form.is_valid():
-            prescripcion = Prescripciones()
-
+            prescripcion = form.save(commit=False)
+            prescripcion.personal_paciente_id = personal_paciente_id
             prescripcion.save()
+            return redirect('prescripciones', personal_paciente_id=personal_paciente_id)
+    else:
+        form = formprescripcion()
 
-            form = formprescripcion()
-    
-    prescripcion = Prescripciones.objects.filter(paciente=paciente)
+    return render(request, 'cargar_prescripcion.html', {'form': form})
 
-    context={
-        'paciente':paciente,
-        'form': form,
-        'prescripcion': prescripcion
-    }
-
-    return render(request,'prescripcion.html',context)
+@login_required
+def ver_prescripciones(request, personal_paciente_id):
+    prescripciones = Prescripciones.objects.filter(personal_paciente_id=personal_paciente_id)
+    return render(request, 'prescripcion.html', {'prescripciones': prescripciones})

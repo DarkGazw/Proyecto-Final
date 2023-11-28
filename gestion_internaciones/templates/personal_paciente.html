@@ -7,11 +7,23 @@
         <tr>
             <th>Paciente</th>
             <th>Doctor a cargo</th>
+            <th>Prescripcion</th>
+            <th>Ver</th>
         </tr>
         {% for i in lista %}
         <tr>
             <td>{{ i.paciente.nombre_pac }}</td>
             <td>{{ i.personal_a_cargo.nombre_per }}</td>
+            <td>
+                <a href="{% url 'cargar_prescripcion' i.id %}">
+                    <button>Cargar</button>
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'prescripciones' i.id %}">
+                    <button>Ver</button>
+                </a>
+            </td>
         </tr>
         {% endfor %}
     </table>
