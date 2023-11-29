@@ -5,48 +5,46 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Inicio de prueba</h1>
+    <h1>Inicio</h1>
     <hr>
 
     {% if request.user.is_authenticated %}
         <h4>Bienvenido, {{ request.user.username }}!</h4>
-    {% else %}
-        <button onclick="location.href='/login/'">Iniciar sesión</button>
-        <!-- Agrega un formulario de inicio de sesión o enlace a la página de inicio de sesión según sea necesario -->
-    {% endif %}
+        <hr>
+    
 
-    <hr>
+   
 
     <h2>Secciones:</h2>
 
-    <div>
-        <a href="{% url 'listadrogueria' %}">
-            <button>Droguería</button>
+    <div class="row">
+        <a href="{% url 'listadrogueria' %}" class="col-md-auto">
+            <button type="button" class="btn btn-primary">Droguería</button>
         </a>
-        <p>Explora nuestra amplia selección de medicamentos y productos farmacéuticos.</p>
+        <p class="col-md-auto">Explora nuestra amplia selección de medicamentos y productos farmacéuticos.</p>
     </div>
 
-    <div>
-        <a href="{% url 'listapacientes' %}">
-            <button>Pacientes</button>
+    <div class="row">
+        <a href="{% url 'listapacientes' %}" class="col-md-auto">
+            <button type="button" class="btn btn-primary">Pacientes</button>
         </a>
-        <p>Gestiona la información de los pacientes y accede a sus historias clínicas.</p>
+        <p class="col-md-auto">Gestiona la información de los pacientes y accede a sus historias clínicas.</p>
     </div>
 
-    <div>
-        <a href="{% url 'internaciones' %}">
-            <button>Internaciones</button>
-        </a>
-        <p>Muestra pacientes que actualmente residen en el hospital</p>
+    <div class="row">
+            <a href="{% url 'internaciones' %}" class="col-md-auto">
+                <button type="button" class="btn btn-primary">Internaciones</button>
+            </a>
+        <p class="col-md-auto">Muestra pacientes que actualmente residen en el hospital</p>
     </div>
 
-    <div>
-        <a href="{% url 'listapersonal' %}">
-            <button>Personal</button>
+    <div class="row">
+        <a href="{% url 'listapersonal' %}" class="col-md-auto">
+            <button type="button" class="btn btn-primary">Personal</button>
         </a>
-        <p>Conoce a nuestro dedicado personal médico y administrativo.</p>
+        <p class="col-md-auto">Conoce a nuestro dedicado personal médico y administrativo.</p>
     </div>
-
+    {% endif %}
 {% endblock %}
 
 

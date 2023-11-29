@@ -14,7 +14,7 @@ urlpatterns = [
     path('obra/<int:paciente_id>/', views.asignar_obra_coseguro, name='asignarObra'),
     path('obras/', views.mostrarObras, name='obras'),
     path('alta/<int:internaciones_id>', views.altaPaciente, name='alta'),
-    path('per_pac/',views.verpac_per, name='per_pac'),
+    path('per_pac/',views.pacientes_por_personal, name='per_pac'),
     path('cargar_prescripcion/<int:personal_paciente_id>/', views.cargar_prescripcion, name='cargar_prescripcion'),
     path('prescripcion/<int:personal_paciente_id>/', views.ver_prescripciones, name='prescripciones'),
-]
+]   
