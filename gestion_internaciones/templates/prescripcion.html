@@ -4,9 +4,11 @@
 
 {% block content %}
     <h1>Prescripciones</h1>
-    <ul>
-        {% for prescripcion in prescripciones %}
-            <li>{{ prescripcion.medicamentos }} - {{ prescripcion.detalles_de_control }}</li>
-        {% endfor %}
-    </ul>
+    
+    {% for i in prescripciones %}
+        <p>Fecha: {{ i.fecha }} | Hora:{{ i.hora }}</p>
+        <b>{{ i.personal_paciente.personal_a_cargo }}</b>
+        <p>Detalle: {{ i.detalles_de_control }}</p>
+    {% endfor %}
+
 {% endblock %}

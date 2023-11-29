@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -38,12 +39,16 @@ class Cargos(models.Model):
     nombre_car = models.CharField(max_length=50)
 
 class Personal(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     nombre_per = models.CharField(max_length=30)
     apellido_per = models.CharField(max_length=15)
     dni_per = models.CharField(max_length=10)
     domicilio_per = models.CharField(max_length=50)
     telefono_per = models.CharField(max_length=12)
     cargo = models.ForeignKey("Cargos",on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.nombre_per} {self.apellido_per}"
 
 class Obras_Sociales(models.Model):
     nombre_obra = models.CharField(max_length=10)
@@ -83,6 +88,8 @@ class Prescripciones(models.Model):
     personal_paciente = models.ForeignKey("Personal_Paciente", on_delete=models.CASCADE)
     medicamentos = models.ForeignKey("Drogueria", on_delete=models.CASCADE)
     detalles_de_control = models.TextField()
+    fecha = models.DateField(auto_now_add=True)
+    hora = models.TimeField(auto_now_add=True)
     
     def __str__(self):
         return f"{self.medicamentos} - {self.personal_paciente}"

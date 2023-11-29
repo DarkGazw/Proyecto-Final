@@ -10,7 +10,7 @@
             <th>Prescripcion</th>
             <th>Ver</th>
         </tr>
-        {% for i in lista %}
+        {% for i in pacientes_asignados %}
         <tr>
             <td>{{ i.paciente.nombre_pac }}</td>
             <td>{{ i.personal_a_cargo.nombre_per }}</td>

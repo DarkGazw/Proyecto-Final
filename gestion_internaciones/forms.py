@@ -145,4 +145,7 @@ class formprescripcion(forms.ModelForm):
         model = Prescripciones
 
         fields=['medicamentos','detalles_de_control']
+    def __init__(self, *args, **kwargs):
+        medicamentos = kwargs.pop('medidicamentos', None)
+        super(formprescripcion, self).__init__(*args, **kwargs)     
     

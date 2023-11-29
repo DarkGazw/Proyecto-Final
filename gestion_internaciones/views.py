@@ -192,14 +192,12 @@ def altaPaciente(request, internaciones_id):
 
     return render(request, 'alta.html',context)
 
-def verpac_per(request):
-    lista = Personal_Paciente.objects.all()
-
-    context = {
-        'lista': lista
-    }
-
-    return render(request, 'personal_paciente.html', context)
+def pacientes_por_personal(request):
+    if request.user.personal:
+        pacientes_asignados = Personal_Paciente.objects.filter(personal_a_cargo=request.user.personal)
+        return render(request, 'personal_paciente.html', {'pacientes_asignados': pacientes_asignados})
+    else:
+        return render(request, '', {'mensaje': 'No eres un miembro del personal'})
 
 @login_required
 def cargar_prescripcion(request, personal_paciente_id):
