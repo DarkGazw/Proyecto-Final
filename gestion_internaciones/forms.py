@@ -96,7 +96,7 @@ class formdroga(forms.ModelForm):
 class forminternacion(forms.ModelForm):
     class Meta:
         model = Internaciones
-        fields = '__all__'
+        fields = ['paciente_inter','habitacion_inter']
 
     def __init__(self, *args, **kwargs):
         pacientes_disponibles = kwargs.pop('pacientes_disponibles', None)
@@ -104,6 +104,11 @@ class forminternacion(forms.ModelForm):
 
         if pacientes_disponibles:
             self.fields['paciente_inter'].queryset = pacientes_disponibles
+
+class formalta(forms.ModelForm):
+    class Meta:
+        model = Internaciones
+        fields = '__all__'
 
 
 
@@ -149,3 +154,4 @@ class formprescripcion(forms.ModelForm):
         medicamentos = kwargs.pop('medidicamentos', None)
         super(formprescripcion, self).__init__(*args, **kwargs)     
     
+

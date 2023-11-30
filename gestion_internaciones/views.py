@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from gestion_internaciones.models import Pacientes, Personal, Drogueria, Internaciones, Obras_Sociales, Coseguros, Obras_Pacientes, Prescripciones, Personal_Paciente
-from gestion_internaciones.forms import FormPaciente, formdroga, forminternacion, AsignarObraCoseguroForm,formprescripcion
+from gestion_internaciones.forms import FormPaciente, formdroga, forminternacion, AsignarObraCoseguroForm,formprescripcion, formalta
 from django.contrib.auth import authenticate, login
 from .forms import CustomUserCreationForm
 import datetime
@@ -120,7 +120,8 @@ def agregar_internacion(request):
         formulario = forminternacion(request.POST, pacientes_disponibles=pacientes_disponibles)
         if formulario.is_valid():
             internacion = formulario.save(commit=False)
-
+            internacion.fecha_egreso = None
+            internacion.hora_egreso = None
             # Obtén el paciente asociado a la internación
             paciente = internacion.paciente_inter
 
@@ -134,8 +135,12 @@ def agregar_internacion(request):
 
     else:
         formulario = forminternacion(pacientes_disponibles=pacientes_disponibles)
+    
+    context={
+        'formulario': formulario
+    }
 
-    return render(request, 'agregarinternacion.html', {'formulario': formulario})
+    return render(request, 'agregarinternacion.html', context)
 
 def asignar_obra_coseguro(request, paciente_id):
     paciente = Pacientes.objects.get(id=paciente_id)
@@ -150,7 +155,12 @@ def asignar_obra_coseguro(request, paciente_id):
     else:
         form = AsignarObraCoseguroForm()
 
-    return render(request, 'obra.html', {'form': form, 'paciente': paciente})
+    context={
+        'form': form,
+        'paciente': paciente
+    }
+
+    return render(request, 'obra.html', context)
 
 def mostrarObras(request):
     obras = Obras_Pacientes.objects.all()
@@ -165,7 +175,7 @@ def altaPaciente(request, internaciones_id):
     internacion = Internaciones.objects.get(id=internaciones_id)
 
     if request.method=='POST':
-        form = forminternacion(request.POST, instance = internacion)
+        form = formalta(request.POST, instance = internacion)
         internacion = form.save(commit=False)
             # Establecer la fecha y hora de egreso al momento del formulario
         internacion.fecha_egreso = form.cleaned_data['fecha_egreso']
@@ -183,7 +193,7 @@ def altaPaciente(request, internaciones_id):
 
         return redirect('internaciones')
     else:
-        form = forminternacion(instance=internacion)
+        form = formalta(instance=internacion)
 
     context={
         'form': form,
@@ -211,9 +221,17 @@ def cargar_prescripcion(request, personal_paciente_id):
     else:
         form = formprescripcion()
 
-    return render(request, 'cargar_prescripcion.html', {'form': form})
+    context={
+        'form': form
+    }
+
+    return render(request, 'cargar_prescripcion.html', context)
 
 @login_required
 def ver_prescripciones(request, personal_paciente_id):
     prescripciones = Prescripciones.objects.filter(personal_paciente_id=personal_paciente_id)
-    return render(request, 'prescripcion.html', {'prescripciones': prescripciones})
+
+    context={
+        'prescripciones': prescripciones
+    }
+    return render(request, 'prescripcion.html', context)

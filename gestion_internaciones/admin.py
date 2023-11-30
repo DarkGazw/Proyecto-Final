@@ -44,6 +44,7 @@ class asignarpaciente(admin.ModelAdmin):
 class prescripcion(admin.ModelAdmin):
     pass
 
+
 admin.site.register(Pacientes)
 admin.site.register(Drogueria)
 admin.site.register(Cargos)

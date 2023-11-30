@@ -24,5 +24,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('gestion_internaciones/', include('gestion_internaciones.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/register/', register, name='register'),
 ]

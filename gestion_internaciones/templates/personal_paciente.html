@@ -4,7 +4,7 @@
 {% block content %}
     <h1>Pacientes + Personal</h1>
     <table class="table">
-        <tr>
+        <tr class="table-success">
             <th>Paciente</th>
             <th>Doctor a cargo</th>
             <th>Prescripcion</th>
@@ -16,12 +16,12 @@
             <td>{{ i.personal_a_cargo.nombre_per }}</td>
             <td>
                 <a href="{% url 'cargar_prescripcion' i.id %}">
-                    <button>Cargar</button>
+                    <button class="btn btn-info">Cargar</button>
                 </a>
             </td>
             <td>
                 <a href="{% url 'prescripciones' i.id %}">
-                    <button>Ver</button>
+                    <button class="btn btn-info">Ver</button>
                 </a>
             </td>
         </tr>

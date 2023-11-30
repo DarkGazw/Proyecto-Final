@@ -38,6 +38,9 @@ class Internaciones(models.Model):
 class Cargos(models.Model):
     nombre_car = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.nombre_car
+
 class Personal(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     nombre_per = models.CharField(max_length=30)
@@ -78,10 +81,10 @@ class Drogueria(models.Model):
     nombre_drog = models.CharField(max_length=20)
     tipo_drog = models.CharField(max_length=255, null=True, blank=True)
     stock_drog = models.IntegerField()
-    
+    descripcion_drog = models.CharField(max_length=255, null=True, blank=True)
+
     def __str__(self):
         return self.nombre_drog
-    descripcion_drog = models.CharField(max_length=255, null=True, blank=True)
 
 
 class Prescripciones(models.Model):
@@ -93,3 +96,4 @@ class Prescripciones(models.Model):
     
     def __str__(self):
         return f"{self.medicamentos} - {self.personal_paciente}"
+    
