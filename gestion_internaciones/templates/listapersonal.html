@@ -4,7 +4,7 @@
 <title>Personal</title>
     <div>
         <h1>Lista Personal</h1>
-        {% if request.user.is_authenticated %}
+        {% if request.user.is_staff %}
             <div>
                 <table class="table">
                     <tr class="table-success">
@@ -27,7 +27,8 @@
                     {% endfor %}
                 </table>
             </div>
-        
+        {%else%}
+            <h1>No tienes permiso para ver esto</h1>
         {% endif %}
     </div>
 

@@ -17,46 +17,44 @@
 
             <h2 class="mt-4">Secciones:</h2>
 
-            <div class="row mt-3">
+            <div class="row">
                 <div class="col-md-6 col-lg-4">
                     <a href="{% url 'listadrogueria' %}" class="btn btn-primary btn-block">
                         Droguería
                     </a>
+                    <p class="mt-2">Explora nuestra amplia selección de medicamentos y productos farmacéuticos.</p>
                 </div>
-            </div>
-            
-            <div class="row mt-3">
+
                 <div class="col-md-6 col-lg-4">
                     <a href="{% url 'listapacientes' %}" class="btn btn-primary btn-block">
                         Pacientes
                     </a>
+                    <p class="mt-2">Gestiona la información de los pacientes y accede a sus historias clínicas.</p>
                 </div>
-            </div>
 
-            <div class="row mt-3">
                 <div class="col-md-6 col-lg-4">
                     <a href="{% url 'internaciones' %}" class="btn btn-primary btn-block">
                         Internaciones
                     </a>
+                    <p class="mt-2">Muestra pacientes que actualmente residen en el hospital.</p>
                 </div>
             </div>
 
-            <div class="row mt-3">
+            <div class="row">
                 <div class="col-md-6 col-lg-4">
                     <a href="{% url 'listapersonal' %}" class="btn btn-primary btn-block">
                         Personal
                     </a>
+                    <p class="mt-2">Conoce a nuestro dedicado personal médico y administrativo.</p>
                 </div>
-            </div>
 
-            <div class="row mt-3">
                 <div class="col-md-6 col-lg-4">
                     <a href="{% url 'per_pac' %}" class="btn btn-primary btn-block">
                         Pacientes en tratamiento
                     </a>
+                    <p class="mt-2">Pacientes del sanatorio en tratamiento médico.</p>
                 </div>
             </div>
         {% endif %}
     </div>
 {% endblock %}
-

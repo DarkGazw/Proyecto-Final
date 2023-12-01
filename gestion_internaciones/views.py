@@ -4,7 +4,12 @@ from gestion_internaciones.forms import FormPaciente, formdroga, forminternacion
 from django.contrib.auth import authenticate, login
 from .forms import CustomUserCreationForm
 import datetime
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import login_required, user_passes_test
+
+def medicos(user):
+    return user.groups.filter(name='Grupo Medico').exists()
+medicos_required = user_passes_test(medicos)
 
 @login_required
 def listapacientes (request):
@@ -14,8 +19,9 @@ def listapacientes (request):
         'pacientes': pacientes,
     }
     
-    return render(request, 'pacientes.html', context) 
+    return render(request, 'pacientes/pacientes.html', context) 
 
+@login_required
 def agregarpaciente(request):
 
     formulario = FormPaciente()
@@ -40,8 +46,9 @@ def agregarpaciente(request):
     context = {
         'formulario': formulario,
     }   
-    return render(request, 'agregarpaciente.html', context)
+    return render(request, 'pacientes/agregarpaciente.html', context)
 
+@login_required
 def register(request):
     if request.method== 'GET':
         return render(request, 'registration/register.html', {'form': CustomUserCreationForm})
@@ -75,12 +82,17 @@ def listaPersonal(request):
 
     return render(request, 'listapersonal.html', context)
 
-
+@login_required
 def home(request):
     context = {}
 
     return render(request, 'home/home.html', context)
 
+def enfermeria(user):
+    return user.groups.filter(name='Enfermeria').exists()
+enfermeria_required = user_passes_test(enfermeria)
+
+@enfermeria_required
 def agregardroga(request):
     formulario = formdroga()
     if request.method== 'POST':
@@ -88,12 +100,14 @@ def agregardroga(request):
         if formulario.is_valid(): 
             formulario.save()
             formulario = formdroga()
+            return redirect('listadrogueria')
                 
     context={
         'formulario': formulario
     }
-    return render(request, 'agregardroga.html', context)
+    return render(request, 'drogueria/agregardroga.html', context)
 
+@login_required
 def listadroga(request):
     drogueria = Drogueria.objects.all()
 
@@ -101,8 +115,9 @@ def listadroga(request):
         'drogueria': drogueria
     }
 
-    return render(request, 'listadrogueria.html', context)
+    return render(request, 'drogueria/listadrogueria.html', context)
 
+@login_required
 def listainternaciones(request):
     internaciones = Internaciones.objects.all()
 
@@ -110,11 +125,11 @@ def listainternaciones(request):
         'internaciones' : internaciones
 
     }
-    return render(request, 'internaciones.html', context)
+    return render(request, 'internaciones/internaciones.html', context)
 
+@login_required
 def agregar_internacion(request):
-    # Filtrar los pacientes que no están internados
-    pacientes_disponibles = Pacientes.objects.exclude(estado_pac='1')  # Excluir a los pacientes internados
+    pacientes_disponibles = Pacientes.objects.exclude(estado_pac='1')
 
     if request.method == 'POST':
         formulario = forminternacion(request.POST, pacientes_disponibles=pacientes_disponibles)
@@ -122,11 +137,8 @@ def agregar_internacion(request):
             internacion = formulario.save(commit=False)
             internacion.fecha_egreso = None
             internacion.hora_egreso = None
-            # Obtén el paciente asociado a la internación
             paciente = internacion.paciente_inter
-
-            # Actualiza el estado del paciente a "Internado"
-            paciente.estado_pac = '1'  # Suponiendo que '1' es el código para "Internado"
+            paciente.estado_pac = '1'  
             paciente.save()
 
             internacion.save()
@@ -140,8 +152,9 @@ def agregar_internacion(request):
         'formulario': formulario
     }
 
-    return render(request, 'agregarinternacion.html', context)
+    return render(request, 'internaciones/agregarinternacion.html', context)
 
+@login_required
 def asignar_obra_coseguro(request, paciente_id):
     paciente = Pacientes.objects.get(id=paciente_id)
 
@@ -160,8 +173,9 @@ def asignar_obra_coseguro(request, paciente_id):
         'paciente': paciente
     }
 
-    return render(request, 'obra.html', context)
+    return render(request, 'seguro/obra.html', context)
 
+@login_required
 def mostrarObras(request):
     obras = Obras_Pacientes.objects.all()
 
@@ -169,15 +183,15 @@ def mostrarObras(request):
         'obras': obras
     }
 
-    return render(request, 'mostrarobra.html', context)
+    return render(request, 'seguro/mostrarobra.html', context)
 
+@login_required
 def altaPaciente(request, internaciones_id):
     internacion = Internaciones.objects.get(id=internaciones_id)
 
     if request.method=='POST':
         form = formalta(request.POST, instance = internacion)
         internacion = form.save(commit=False)
-            # Establecer la fecha y hora de egreso al momento del formulario
         internacion.fecha_egreso = form.cleaned_data['fecha_egreso']
         internacion.hora_egreso = form.cleaned_data['hora_egreso']
 
@@ -200,8 +214,9 @@ def altaPaciente(request, internaciones_id):
         'internacion': internacion
     }
 
-    return render(request, 'alta.html',context)
+    return render(request, 'internaciones/alta.html',context)
 
+@medicos_required
 def pacientes_por_personal(request):
     if request.user.personal:
         pacientes_asignados = Personal_Paciente.objects.filter(personal_a_cargo=request.user.personal)
@@ -209,7 +224,7 @@ def pacientes_por_personal(request):
     else:
         return render(request, '', {'mensaje': 'No eres un miembro del personal'})
 
-@login_required
+@medicos_required
 def cargar_prescripcion(request, personal_paciente_id):
     if request.method == 'POST':
         form = formprescripcion(request.POST)
@@ -227,7 +242,7 @@ def cargar_prescripcion(request, personal_paciente_id):
 
     return render(request, 'cargar_prescripcion.html', context)
 
-@login_required
+@medicos_required
 def ver_prescripciones(request, personal_paciente_id):
     prescripciones = Prescripciones.objects.filter(personal_paciente_id=personal_paciente_id)
 
@@ -235,3 +250,4 @@ def ver_prescripciones(request, personal_paciente_id):
         'prescripciones': prescripciones
     }
     return render(request, 'prescripcion.html', context)
+

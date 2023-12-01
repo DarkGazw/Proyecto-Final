@@ -1,14 +1,16 @@
-<!-- templates/tuapp/ver_prescripciones.html -->
-
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Prescripciones</h1>
+    <h1>Historia Clinica</h1>
     
     {% for i in prescripciones %}
         <p>Fecha: {{ i.fecha }} | Hora:{{ i.hora }}</p>
         <b>{{ i.personal_paciente.personal_a_cargo }}</b>
         <p>Detalle: {{ i.detalles_de_control }}</p>
     {% endfor %}
+
+    <a href="{% url 'per_pac' %}">
+        <button class="btn btn-success">Volver</button>
+    </a>
 
 {% endblock %}

@@ -7,7 +7,12 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'home' %}">Inicio</a>
+                </li> 
+                {% if request.user.is_staff %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
                 </li>
+                {% endif %}
             {% if request.user.is_authenticated %} 
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'listapacientes' %}">Pacientes</a>

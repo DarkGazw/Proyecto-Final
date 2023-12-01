@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
+    {%if request.user.is_staff%}
     <h1>Dar de Alta a Paciente</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-success">Dar de Alta</button>
     </form>
+    {%else%}
+    <h1>No puedes realizar esta accion</h1>
+    {%endif%}
 {% endblock %}

@@ -8,7 +8,7 @@
             <th>Paciente</th>
             <th>Doctor a cargo</th>
             <th>Prescripcion</th>
-            <th>Ver</th>
+            <th>Historia Clinica</th>
         </tr>
         {% for i in pacientes_asignados %}
         <tr>
@@ -16,7 +16,7 @@
             <td>{{ i.personal_a_cargo.nombre_per }}</td>
             <td>
                 <a href="{% url 'cargar_prescripcion' i.id %}">
-                    <button class="btn btn-info">Cargar</button>
+                    <button class="btn btn-info">Agregar</button>
                 </a>
             </td>
             <td>

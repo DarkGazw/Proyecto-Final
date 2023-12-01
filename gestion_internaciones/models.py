@@ -27,6 +27,9 @@ class Habitaciones(models.Model):
     camas_hab = models.IntegerField()
     camasdispo_hab = models.IntegerField()
 
+    def __str__(self):
+        return self.ubicacion_hab
+
 class Internaciones(models.Model):
     paciente_inter = models.ForeignKey("Pacientes", on_delete=models.CASCADE)
     habitacion_inter = models.ForeignKey("Habitaciones", on_delete=models.CASCADE)

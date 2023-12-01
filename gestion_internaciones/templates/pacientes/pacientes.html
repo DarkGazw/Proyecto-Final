@@ -2,6 +2,7 @@
 
 {% block content %}
 <title>Pacientes</title>
+{% if request.user.is_staff %}
 <div class="mt-3">
     <h1 class="row justify-content-left">Pacientes</h1>
 </div>
@@ -41,4 +42,8 @@
         <button class="btn btn-success">Mostrar obras</button>
     </a>
 </div>
+{%else%}
+<h1>No tienes permisos para ver esto</h1>
+{%endif%}
+
 {% endblock %}
